@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('ppm_data', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->string('executor');
+            $table->year('year');
+            $table->string('location');
+            $table->text('description')->nullable();
+            $table->string('document')->nullable();
+            $table->enum('status', ['planned', 'ongoing', 'completed'])->default('planned');
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('ppm_data');
+    }
+};
