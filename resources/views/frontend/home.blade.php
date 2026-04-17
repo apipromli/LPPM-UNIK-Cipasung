@@ -276,7 +276,7 @@
 {{-- 5. PUSAT STUDI SECTION                                        --}}
 {{-- ============================================================ --}}
 @if($studyCenters->count() > 0)
-<section class="py-5" style="background: var(--bg-light);">
+<section class="py-5" style="background: var(--bg);">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
             <div class="section-label">Di Bawah Naungan LPPM</div>
@@ -301,13 +301,13 @@
                     </div>
                     <div class="study-center-body">
                         @if($center->short_name)
-                        <span class="badge mb-2" style="background:var(--secondary-color);">{{ $center->short_name }}</span>
+                        <span class="badge mb-2" style="background:var(--primary-mid);">{{ $center->short_name }}</span>
                         @endif
                         <h5 class="fw-bold">{{ $center->name }}</h5>
                         <p class="text-muted small">{{ Str::limit($center->description, 100) }}</p>
                         @if($center->head_name)
                         <div class="d-flex align-items-center mt-auto pt-2 border-top">
-                            <i class="bi bi-person-badge me-2" style="color:var(--secondary-color);"></i>
+                            <i class="bi bi-person-badge me-2" style="color:var(--primary-mid);"></i>
                             <small><strong>Ketua:</strong> {{ $center->head_name }}</small>
                         </div>
                         @endif
@@ -376,7 +376,7 @@
 {{-- ============================================================ --}}
 {{-- 7. LATEST NEWS SECTION                                        --}}
 {{-- ============================================================ --}}
-<section class="py-5" style="background: var(--bg-light);">
+<section class="py-5" style="background: var(--bg);">
     <div class="container">
         <div class="row align-items-center mb-5">
             <div class="col-md-8" data-aos="fade-right">
@@ -441,7 +441,7 @@
                             <div class="news-list-body">
                                 <h6 class="fw-semibold mb-1">
                                     <a href="{{ route('news.detail', $news->slug) }}" class="text-decoration-none stretched-link"
-                                        style="color: var(--text-dark);">
+                                        style="color: var(--text);">
                                         {{ Str::limit($news->title, 70) }}
                                     </a>
                                 </h6>
@@ -508,7 +508,7 @@
 {{-- 9. COOPERATION / PARTNERS SECTION                             --}}
 {{-- ============================================================ --}}
 @if($activeCooperations->count() > 0)
-<section class="py-5" style="background: var(--bg-light);">
+<section class="py-5" style="background: var(--bg);">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
             <div class="section-label">Jaringan Kami</div>
@@ -569,56 +569,10 @@
 
 @push('styles')
 <style>
-/* ---- Hero Enhancements ---- */
-.hero-badge span {
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
-    color: white;
-    padding: 6px 16px;
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 500;
-    border: 1px solid rgba(255,255,255,0.3);
-    display: inline-block;
-}
-.hero-highlight {
-    color: var(--accent-color);
-    text-shadow: none;
-}
-.btn-hero-primary {
-    background: white;
-    color: #1a7f3f;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 15px;
-    transition: all .3s;
-    box-shadow: 0 4px 15px rgba(0,0,0,.15);
-}
-.btn-hero-primary:hover {
-    background: #f8f9fa;
-    color: #046a1d;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,.2);
-}
-.btn-hero-outline {
-    background: transparent;
-    color: white;
-    border: 2px solid rgba(255,255,255,.8);
-    padding: 12px 28px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 15px;
-    transition: all .3s;
-}
-.btn-hero-outline:hover {
-    background: white;
-    color: #f39c12;
-    border-color: white;
-    transform: translateY(-2px);
-}
+/* home.blade.php — uses new design system vars from layouts/app.blade.php */
 
+/* ---- Hero Enhancements ---- */
+.hero-highlight { color: var(--gold-light); }
 /* ---- Stats Section ---- */
 .stats-section {
     margin-top: -30px;
@@ -639,27 +593,27 @@
     transition: background .3s;
 }
 .stat-item:hover {
-    background: var(--bg-light);
+    background: var(--bg);
 }
 .stat-icon {
     font-size: 2rem;
-    color: var(--secondary-color);
+    color: var(--primary-mid);
     margin-bottom: 10px;
 }
 .stat-number {
     font-size: 2.5rem;
     font-weight: 800;
-    color: var(--primary-color);
+    color: var(--primary);
     line-height: 1;
     margin-bottom: 6px;
 }
 .stat-number span {
     font-size: 1.6rem;
-    color: var(--accent-color);
+    color: var(--gold);
 }
 .stat-label {
     font-size: 13px;
-    color: var(--text-light);
+    color: var(--text-muted);
     font-weight: 500;
 }
 @media (max-width: 767px) {
@@ -674,7 +628,7 @@
 
 /* ---- Section Labels / Headings ---- */
 .section-label {
-    color: var(--secondary-color);
+    color: var(--primary-mid);
     font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
@@ -684,13 +638,13 @@
 .section-heading {
     font-size: 2rem;
     font-weight: 700;
-    color: var(--primary-color);
+    color: var(--primary);
     margin-bottom: 12px;
 }
 .section-divider {
     width: 60px;
     height: 4px;
-    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    background: linear-gradient(90deg, var(--primary-mid), var(--gold));
     border-radius: 2px;
 }
 
@@ -713,11 +667,11 @@
     position: absolute;
     bottom: -15px;
     right: -10px;
-    background: linear-gradient(135deg, var(--accent-color), #e67e22);
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
     color: white;
     padding: 12px 20px;
     border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(245,158,11,.4);
+    box-shadow: 0 8px 25px rgba(184,148,10,.4);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -732,7 +686,7 @@
 }
 
 /* ---- Services ---- */
-.services-section { background: var(--bg-light); }
+.services-section { background: var(--bg); }
 .service-card {
     background: white;
     border-radius: 16px;
@@ -746,10 +700,10 @@
 .service-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 12px 36px rgba(0,0,0,.13);
-    border-color: var(--secondary-color);
+    border-color: var(--primary-mid);
 }
 .service-card-featured {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #2563eb 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-mid) 100%);
     color: white;
     border: none;
 }
@@ -769,11 +723,11 @@
 .service-card h5 {
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--primary-color);
+    color: var(--primary);
     margin-bottom: 12px;
 }
 .service-link {
-    color: var(--secondary-color);
+    color: var(--primary-mid);
     font-weight: 600;
     font-size: 14px;
     text-decoration: none;
@@ -804,7 +758,7 @@
 }
 .study-center-icon-wrap {
     height: 160px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, var(--primary), var(--primary-mid));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -816,7 +770,7 @@
     flex-grow: 1;
 }
 .study-center-body h5 {
-    color: var(--primary-color);
+    color: var(--primary);
     font-size: 15px;
     margin-bottom: 8px;
 }
@@ -872,7 +826,7 @@
     height: 100%;
     position: absolute;
     top: 0; left: 0;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, var(--primary), var(--primary-mid));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -920,7 +874,7 @@
     width: 80px;
     height: 64px;
     border-radius: 8px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, var(--primary), var(--primary-mid));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -929,7 +883,7 @@
     flex-shrink: 0;
 }
 .news-list-body { flex: 1; }
-.news-list-body .news-meta-bar { color: var(--text-light); margin-top: 4px; }
+.news-list-body .news-meta-bar { color: var(--text-muted); margin-top: 4px; }
 
 /* ---- Gallery ---- */
 .gallery-grid {
@@ -994,20 +948,20 @@
 }
 .partner-icon {
     font-size: 2rem;
-    color: var(--secondary-color);
+    color: var(--primary-mid);
     margin-bottom: 8px;
 }
 .partner-name {
     font-size: 12px;
     font-weight: 600;
-    color: var(--text-dark);
+    color: var(--text);
     margin-bottom: 4px;
     line-height: 1.3;
 }
 .partner-type {
     font-size: 11px;
-    color: var(--text-light);
-    background: var(--bg-light);
+    color: var(--text-muted);
+    background: var(--bg);
     padding: 2px 8px;
     border-radius: 20px;
 }
@@ -1018,7 +972,7 @@
     background: white;
 }
 .cta-wrapper {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #2563eb 60%, var(--secondary-color) 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, #1a6638 60%, var(--primary-mid) 100%);
     border-radius: 20px;
     padding: 50px 48px;
     position: relative;
@@ -1047,7 +1001,7 @@
 }
 .btn-cta {
     background: white;
-    color: var(--primary-color);
+    color: var(--primary);
     border: none;
     padding: 12px 24px;
     border-radius: 50px;
@@ -1055,8 +1009,8 @@
     transition: all .3s;
 }
 .btn-cta:hover {
-    background: var(--accent-color);
-    color: white;
+    background: var(--gold);
+    color: var(--primary);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0,0,0,.2);
 }

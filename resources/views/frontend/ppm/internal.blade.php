@@ -4,8 +4,9 @@
 
 @section('content')
 <div class="page-header">
+    <img src="/assets/images/image.png" alt="" class="watermark">
     <div class="container">
-        <h1>Data Pengabdian kepada Masyarakat Internal</h1>
+        <h1><i class="bi bi-people-fill me-2" style="color:var(--gold-light);"></i>Data Pengabdian kepada Masyarakat Internal</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
@@ -16,248 +17,296 @@
     </div>
 </div>
 
-<section class="py-4">
+<section class="py-4 pb-5">
     <div class="container-fluid px-4">
-        <!-- Filter Section - Sticky -->
-        <div class="filter-sticky mb-3">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-3">
-                    <div class="row align-items-center">
-                        <div class="col-md-8">
-                            <div class="d-flex gap-3 align-items-center">
-                                <div class="year-filters d-flex gap-2 flex-wrap">
-                                    <a href="{{ route('ppm.internal') }}"
-                                        class="btn btn-sm {{ !request('year') ? 'btn-primary' : 'btn-outline-primary' }}">
-                                        Semua
-                                    </a>
-                                    @foreach($years as $year)
-                                    <a href="{{ route('ppm.internal', ['year' => $year]) }}"
-                                        class="btn btn-sm {{ request('year') == $year ? 'btn-primary' : 'btn-outline-primary' }}">
-                                        {{ $year }}
-                                    </a>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 text-end">
-                            <span class="badge bg-info">
-                                Total: {{ $ppms->count() }} Data
-                            </span>
-                        </div>
+
+        {{-- ---- Toolbar ---- --}}
+        <div class="data-toolbar mb-4">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <span class="toolbar-label">Filter Tahun:</span>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="{{ route('ppm.internal') }}"
+                            class="year-btn {{ !request('year') ? 'active' : '' }}">Semua</a>
+                        @foreach($years as $year)
+                        <a href="{{ route('ppm.internal', ['year' => $year]) }}"
+                            class="year-btn {{ request('year') == $year ? 'active' : '' }}">{{ $year }}</a>
+                        @endforeach
                     </div>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="data-count-badge">
+                        <i class="bi bi-table me-1"></i>
+                        Total: <strong>{{ $ppms->total() }}</strong> Data
+                    </span>
+                    <a href="{{ route('admin.ppm.export.excel', request()->only('year')) }}"
+                        class="btn-export btn-export-excel">
+                        <i class="bi bi-file-earmark-excel me-1"></i>Excel
+                    </a>
+                    <a href="{{ route('admin.ppm.export.pdf', request()->only('year')) }}"
+                        class="btn-export btn-export-pdf">
+                        <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- Table Excel Style -->
+        {{-- ---- Table ---- --}}
         @if($ppms->count() > 0)
-        <div class="excel-table-container">
-            <div class="table-wrapper">
-                <table class="table table-bordered table-hover excel-style-table">
-                    <thead class="table-header-sticky">
+        <div class="data-table-card">
+            <div class="data-table-wrapper">
+                <table class="data-table">
+                    <thead>
                         <tr>
-                            <th class="text-center" style="width: 50px;">NO</th>
-                            <th style="min-width: 250px;">NAMA KETUA</th>
-                            <th class="text-center" style="width: 150px;">NIDN</th>
-                            <th style="min-width: 150px;">SKEMA</th>
-                            <th style="min-width: 500px;">JUDUL</th>
-                            <th class="text-center" style="width: 80px;">TAHUN</th>
+                            <th style="width:52px;" class="text-center">No</th>
+                            <th style="min-width:200px;">Nama Pelaksana</th>
+                            <th style="width:130px;" class="text-center">NIDN</th>
+                            <th style="min-width:160px;">Skema</th>
+                            <th style="min-width:480px;">Judul Kegiatan</th>
+                            <th style="min-width:130px;">Lokasi</th>
+                            <th style="width:90px;" class="text-center">Tahun</th>
+                            <th style="width:110px;" class="text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($ppms as $index => $ppm)
+                        @foreach($ppms as $ppm)
                         <tr>
-                            <td class="text-center">{{ $index + 1 }}</td>
-                            <td>{{ $ppm->executor }}</td>
-                            <td class="text-center">{{ $ppm->nidn ?? '-' }}</td>
-                            <td>{{ $ppm->scheme ?? 'Ibp' }}</td>
-                            <td>{{ $ppm->title }}</td>
-                            <td class="text-center">{{ $ppm->year }}</td>
+                            <td class="text-center text-muted fw-semibold">
+                                {{ ($ppms->currentPage() - 1) * $ppms->perPage() + $loop->iteration }}
+                            </td>
+                            <td>
+                                <div class="researcher-cell">
+                                    <div class="researcher-avatar">{{ strtoupper(substr($ppm->executor, 0, 1)) }}</div>
+                                    <div>
+                                        <div class="fw-semibold">{{ $ppm->executor }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="nidn-badge">{{ $ppm->nidn ?? '-' }}</span>
+                            </td>
+                            <td>
+                                <span class="scheme-badge scheme-ppm">{{ $ppm->scheme ?? 'IBP' }}</span>
+                            </td>
+                            <td>
+                                <div class="title-cell">{{ $ppm->title }}</div>
+                            </td>
+                            <td>
+                                @if($ppm->location)
+                                <small><i class="bi bi-geo-alt me-1" style="color:var(--primary-mid);"></i>{{ $ppm->location }}</small>
+                                @else
+                                <span class="text-muted">-</span>
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                <span class="year-cell">{{ $ppm->year }}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="status-badge {{ $ppm->status === 'completed' ? 'status-done' : 'status-ongoing' }}">
+                                    {{ $ppm->status === 'completed' ? 'Selesai' : 'Berlangsung' }}
+                                </span>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
+
+            <div class="table-footer">
+                <small class="text-muted">
+                    Menampilkan {{ $ppms->firstItem() }}–{{ $ppms->lastItem() }} dari {{ $ppms->total() }} data
+                    &nbsp;·&nbsp; Halaman {{ $ppms->currentPage() }} / {{ $ppms->lastPage() }}
+                </small>
+                <div class="pagination-wrap">
+                    {{ $ppms->links() }}
+                </div>
+            </div>
         </div>
         @else
-        <div class="alert alert-info">
-            <i class="bi bi-info-circle"></i>
-            @if(request()->has('year'))
-            Tidak ada data PPM pada tahun {{ request('year') }}.
-            @else
-            Data PPM internal belum tersedia.
+        <div class="empty-state">
+            <i class="bi bi-people"></i>
+            <h5>Tidak Ada Data</h5>
+            <p>{{ request('year') ? 'Tidak ada data PPM pada tahun '.request('year').'.' : 'Data PPM internal belum tersedia.' }}</p>
+            @if(request('year'))
+            <a href="{{ route('ppm.internal') }}" class="btn btn-primary btn-sm mt-2">Tampilkan Semua</a>
             @endif
         </div>
         @endif
+
     </div>
 </section>
 @endsection
 
 @push('styles')
 <style>
-    /* Filter Sticky */
-    .filter-sticky {
-        position: sticky;
-        top: 60px;
-        z-index: 100;
-        background: white;
-    }
+/* Shared with penelitian — copy same data-table styles */
+.data-toolbar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-sm);
+}
+.toolbar-label { font-size: 13px; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+.year-btn {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+    text-decoration: none;
+    transition: all .2s;
+    line-height: 1;
+}
+.year-btn:hover { background: var(--primary); color: var(--white); }
+.year-btn.active { background: var(--primary); color: var(--white); }
+.data-count-badge {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+.btn-export {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .2s;
+    border: none;
+    line-height: 1.4;
+}
+.btn-export-excel { background: #1a7032; color: white; }
+.btn-export-excel:hover { background: #155a28; color: white; transform: translateY(-1px); }
+.btn-export-pdf { background: #c0392b; color: white; }
+.btn-export-pdf:hover { background: #a93226; color: white; transform: translateY(-1px); }
 
-    /* Excel Table Container */
-    .excel-table-container {
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
+.data-table-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+.data-table-wrapper {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 260px);
+}
+.data-table-wrapper::-webkit-scrollbar { width: 8px; height: 8px; }
+.data-table-wrapper::-webkit-scrollbar-track { background: var(--bg); }
+.data-table-wrapper::-webkit-scrollbar-thumb { background: #c8d5cc; border-radius: 4px; }
+.data-table-wrapper::-webkit-scrollbar-thumb:hover { background: #9eb5a6; }
 
-    .table-wrapper {
-        overflow-x: auto;
-        overflow-y: auto;
-        max-height: calc(100vh - 280px);
-        position: relative;
-    }
+.data-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13.5px; }
+.data-table thead th {
+    background: var(--primary);
+    color: rgba(255,255,255,.92);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    padding: 14px 14px;
+    border-bottom: 2px solid rgba(255,255,255,.15);
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.data-table tbody td {
+    padding: 14px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: middle;
+    line-height: 1.55;
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:nth-child(even) td { background: #f8faf9; }
+.data-table tbody tr:hover td { background: #e8f3ec; }
 
-    /* Excel Style Table */
-    .excel-style-table {
-        margin: 0;
-        font-size: 13px;
-        border-collapse: separate;
-        border-spacing: 0;
-        width: 100%;
-    }
+.researcher-cell { display: flex; align-items: center; gap: 10px; }
+.researcher-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a6638, var(--primary-mid));
+    color: white;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.nidn-badge {
+    font-size: 12.5px;
+    font-family: 'Courier New', monospace;
+    background: var(--bg);
+    padding: 3px 8px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+}
+.scheme-badge {
+    display: inline-block;
+    background: #e8f3ec;
+    color: var(--primary);
+    border: 1px solid #c3ddc9;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.scheme-ppm {
+    background: #eef2ff;
+    color: #3730a3;
+    border-color: #c7d2fe;
+}
+.title-cell { font-size: 13.5px; line-height: 1.5; color: var(--dark); font-weight: 500; }
+.year-cell {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12.5px;
+    font-weight: 700;
+}
+.status-badge { display: inline-block; padding: 4px 10px; border-radius: 50px; font-size: 11.5px; font-weight: 700; }
+.status-done { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.status-ongoing { background: #fef9c3; color: #92400e; border: 1px solid #fde047; }
 
-    .excel-style-table thead th {
-        background: #217346;
-        color: white;
-        font-weight: 600;
-        padding: 12px 8px;
-        text-align: left;
-        border: 1px solid #1a5c37;
-        white-space: nowrap;
-    }
+.table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.pagination-wrap .pagination { margin-bottom: 0; }
+.pagination-wrap .page-link { color: var(--primary); border-color: var(--border); font-size: 13px; padding: 6px 12px; }
+.pagination-wrap .page-item.active .page-link { background: var(--primary); border-color: var(--primary); }
 
-    .excel-style-table tbody td {
-        padding: 10px 8px;
-        border: 1px solid #dee2e6;
-        background: white;
-        vertical-align: top;
-    }
+.empty-state { text-align: center; padding: 80px 24px; color: var(--text-muted); }
+.empty-state i { font-size: 3.5rem; margin-bottom: 16px; display: block; opacity: .4; }
+.empty-state h5 { font-weight: 700; color: var(--text); margin-bottom: 8px; }
 
-    .excel-style-table tbody tr:nth-child(even) {
-        background: #f8f9fa;
-    }
-
-    .excel-style-table tbody tr:hover {
-        background: #e7f3ff;
-    }
-
-    /* Sticky Header */
-    .table-header-sticky {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-    }
-
-    /* Year Filter Buttons */
-    .year-filters .btn-sm {
-        font-size: 13px;
-        padding: 6px 16px;
-        border-radius: 20px;
-        transition: all 0.3s;
-    }
-
-    .year-filters .btn-outline-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
-    }
-
-    /* Scrollbar Styling */
-    .table-wrapper::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 10px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .filter-sticky {
-            top: 56px;
-        }
-
-        .year-filters {
-            flex-direction: column;
-            width: 100%;
-        }
-
-        .year-filters .btn-sm {
-            width: 100%;
-        }
-
-        .table-wrapper {
-            max-height: calc(100vh - 320px);
-        }
-
-        .excel-style-table {
-            font-size: 11px;
-        }
-
-        .excel-style-table thead th,
-        .excel-style-table tbody td {
-            padding: 8px 6px;
-        }
-    }
-
-    /* Print Styles */
-    @media print {
-
-        .filter-sticky,
-        .page-header {
-            display: none;
-        }
-
-        .table-wrapper {
-            max-height: none;
-            overflow: visible;
-        }
-
-        .excel-style-table {
-            font-size: 10px;
-        }
-    }
+@media (max-width: 768px) {
+    .data-toolbar { padding: 12px 14px; }
+    .data-table-wrapper { max-height: calc(100vh - 300px); }
+    .data-table { font-size: 12px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 10px; }
+    .researcher-avatar { display: none; }
+    .table-footer { flex-direction: column; align-items: flex-start; }
+}
+@media print {
+    .data-toolbar, .table-footer { display: none; }
+    .data-table-wrapper { max-height: none; overflow: visible; }
+}
 </style>
-@endpush
-
-@push('scripts')
-<script>
-    // Smooth scroll untuk table
-    document.addEventListener('DOMContentLoaded', function() {
-        const tableWrapper = document.querySelector('.table-wrapper');
-        if (tableWrapper) {
-            // Auto-adjust table height based on viewport
-            function adjustTableHeight() {
-                const windowHeight = window.innerHeight;
-                const tableTop = tableWrapper.getBoundingClientRect().top;
-                const maxHeight = windowHeight - tableTop - 40;
-                tableWrapper.style.maxHeight = maxHeight + 'px';
-            }
-
-            adjustTableHeight();
-            window.addEventListener('resize', adjustTableHeight);
-        }
-    });
-</script>
 @endpush

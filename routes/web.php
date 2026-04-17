@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\ResearchController as FrontendResearchControll
 use App\Http\Controllers\Frontend\PpmController as FrontendPpmController;
 use App\Http\Controllers\Frontend\StudyCenterController as FrontendStudyCenterController;
 use App\Http\Controllers\Admin\ResearchExportController;
+use App\Http\Controllers\Admin\PpmExportController;
 use App\Http\Controllers\Admin\ResearchController;
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
@@ -58,6 +59,10 @@ Route::prefix('ppm')->name('ppm.')->group(function () {
 // News Routes
 Route::get('/berita', [HomeController::class, 'news'])->name('news.index');
 Route::get('/berita/{slug}', [HomeController::class, 'newsDetail'])->name('news.detail');
+
+// PPM Export Routes
+Route::get('/ppm/export/excel', [PpmExportController::class, 'excel'])->name('admin.ppm.export.excel');
+Route::get('/ppm/export/pdf', [PpmExportController::class, 'pdf'])->name('admin.ppm.export.pdf');
 
 // Pusat Studi Routes
 Route::get('/pusat-studi', [FrontendStudyCenterController::class, 'index'])->name('study-centers.index');

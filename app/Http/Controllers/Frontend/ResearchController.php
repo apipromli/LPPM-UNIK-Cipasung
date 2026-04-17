@@ -19,7 +19,7 @@ class ResearchController extends Controller
         $researches = $query
             ->orderBy('year', 'desc')
             ->orderBy('researcher', 'asc')
-            ->paginate(15)
+            ->paginate(30)
             ->withQueryString(); // PENTING untuk filter
 
 
