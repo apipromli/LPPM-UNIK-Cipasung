@@ -316,6 +316,15 @@
                 </a>
             </li>
 
+            <li class="sidebar-section-label">PUSAT STUDI</li>
+
+            <li>
+                <a href="{{ route('admin.study-centers.index') }}" class="{{ request()->routeIs('admin.study-centers.*') ? 'active' : '' }}">
+                    <i class="bi bi-buildings"></i>
+                    <span>Pusat Studi</span>
+                </a>
+            </li>
+
             <li class="sidebar-section-label">LAYANAN & DATA</li>
 
             <li>

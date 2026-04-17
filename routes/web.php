@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ServiceController as FrontendServiceController;
 use App\Http\Controllers\Frontend\ResearchController as FrontendResearchController;
 use App\Http\Controllers\Frontend\PpmController as FrontendPpmController;
+use App\Http\Controllers\Frontend\StudyCenterController as FrontendStudyCenterController;
 use App\Http\Controllers\Admin\ResearchExportController;
 use App\Http\Controllers\Admin\ResearchController;
 
@@ -58,6 +59,10 @@ Route::prefix('ppm')->name('ppm.')->group(function () {
 Route::get('/berita', [HomeController::class, 'news'])->name('news.index');
 Route::get('/berita/{slug}', [HomeController::class, 'newsDetail'])->name('news.detail');
 
+// Pusat Studi Routes
+Route::get('/pusat-studi', [FrontendStudyCenterController::class, 'index'])->name('study-centers.index');
+Route::get('/pusat-studi/{slug}', [FrontendStudyCenterController::class, 'show'])->name('study-centers.show');
+
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
@@ -103,6 +108,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     // Cooperation Routes
     Route::resource('cooperations', App\Http\Controllers\Admin\CooperationController::class);
+
+    // Study Center Routes
+    Route::resource('study-centers', App\Http\Controllers\Admin\StudyCenterController::class);
 });
 
 

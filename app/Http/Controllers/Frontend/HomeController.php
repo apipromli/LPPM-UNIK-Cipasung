@@ -9,6 +9,9 @@ use App\Models\Research;
 use App\Models\Ppm;
 use App\Models\Restra;
 use App\Models\Performance;
+use App\Models\Cooperation;
+use App\Models\Profile;
+use App\Models\StudyCenter;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,13 +19,18 @@ class HomeController extends Controller
     public function index()
     {
         $data = [
-            'latestNews' => News::where('is_published', true)
+            'latestNews'      => News::where('is_published', true)
                 ->latest('published_at')
                 ->take(6)
                 ->get(),
-            'galleries' => Gallery::latest()->take(8)->get(),
+            'galleries'       => Gallery::latest()->take(8)->get(),
             'totalResearches' => Research::count(),
-            'totalPpm' => Ppm::count(),
+            'totalPpm'        => Ppm::count(),
+            'totalCooperations' => Cooperation::where('status', 'active')->count(),
+            'latestResearch'  => Research::latest()->take(5)->get(),
+            'activeCooperations' => Cooperation::where('status', 'active')->latest()->take(6)->get(),
+            'studyCenters'    => StudyCenter::where('is_active', true)->orderBy('order')->get(),
+            'profile'         => Profile::first(),
         ];
 
         return view('frontend.home', $data);

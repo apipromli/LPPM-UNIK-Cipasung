@@ -892,13 +892,27 @@
                             Tentang Kami
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('about.history') }}">Sejarah/Profil</a></li>
-                            <li><a class="dropdown-item" href="{{ route('about.vision-mission') }}">Visi & Misi</a></li>
-                            <li><a class="dropdown-item" href="{{ route('about.organizational-structure') }}">Struktur Organisasi</a></li>
-                            <li><a class="dropdown-item" href="{{ route('about.leaders') }}">Profil Pimpinan</a></li>
-                            <li><a class="dropdown-item" href="{{ route('about.staff') }}">Staf LPPM</a></li>
-                            <li><a class="dropdown-item" href="{{ route('about.gallery') }}">Galeri</a></li>
-                            <li><a class="dropdown-item" href="{{ route('about.budget-realization') }}">Realisasi Anggaran</a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.history') }}">
+                                <i class="bi bi-building me-2 text-primary"></i>Sejarah/Profil
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.vision-mission') }}">
+                                <i class="bi bi-eye me-2 text-primary"></i>Visi &amp; Misi
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.organizational-structure') }}">
+                                <i class="bi bi-diagram-3 me-2 text-primary"></i>Struktur Organisasi
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.leaders') }}">
+                                <i class="bi bi-person-badge me-2 text-primary"></i>Profil Pimpinan
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.staff') }}">
+                                <i class="bi bi-people me-2 text-primary"></i>Staf LPPM
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.gallery') }}">
+                                <i class="bi bi-images me-2 text-primary"></i>Galeri
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.budget-realization') }}">
+                                <i class="bi bi-cash-stack me-2 text-primary"></i>Realisasi Anggaran
+                            </a></li>
                         </ul>
                     </li>
 
@@ -908,21 +922,21 @@
                             Layanan
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('research.internal') }}">Penelitian</a></li>
-                            <li><a class="dropdown-item" href="{{ route('ppm.internal') }}">Pengabdian</a></li>
-                            <li><a class="dropdown-item" href="{{ route('services.cooperation') }}">Kerjasama</a></li>
+                            <li><a class="dropdown-item" href="{{ route('services.research') }}">
+                                <i class="bi bi-journal-text me-2 text-primary"></i>Layanan Penelitian
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ route('services.community-service') }}">
+                                <i class="bi bi-people-fill me-2 text-success"></i>Pengabdian Masyarakat
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ route('services.cooperation') }}">
+                                <i class="bi bi-handshake me-2 text-warning"></i>Kerjasama
+                            </a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('restra') ? 'active' : '' }}" href="{{ route('restra') }}">
-                            Renstra
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('performance') ? 'active' : '' }}" href="{{ route('performance') }}">
-                            Kinerja
+                        <a class="nav-link {{ request()->routeIs('news.*') ? 'active' : '' }}" href="{{ route('news.index') }}">
+                            Berita
                         </a>
                     </li>
 
@@ -932,7 +946,15 @@
                             Penelitian
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('research.internal') }}">Data Penelitian Internal</a></li>
+                            <li><a class="dropdown-item" href="{{ route('research.internal') }}">
+                                <i class="bi bi-journal-text me-2 text-primary"></i>Data Penelitian Internal
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ route('restra') }}">
+                                <i class="bi bi-file-earmark-text me-2 text-primary"></i>Renstra LPPM
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ route('performance') }}">
+                                <i class="bi bi-bar-chart me-2 text-primary"></i>Kinerja LPPM
+                            </a></li>
                         </ul>
                     </li>
 
@@ -942,7 +964,35 @@
                             PPM
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('ppm.internal') }}">Data PPM Internal</a></li>
+                            <li><a class="dropdown-item" href="{{ route('ppm.internal') }}">
+                                <i class="bi bi-people me-2 text-success"></i>Data PPM Internal
+                            </a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link {{ request()->routeIs('study-centers.*') ? 'active' : '' }}"
+                            href="#" role="button" data-bs-toggle="dropdown">
+                            Pusat Studi
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="dropdown-header" style="color: var(--secondary-color); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">
+                                    Di bawah LPPM
+                                </div>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('study-centers.index') }}">
+                                <i class="bi bi-buildings me-2" style="color:#7c3aed;"></i>Semua Pusat Studi
+                            </a></li>
+                            @php
+                                $navStudyCenters = \App\Models\StudyCenter::where('is_active', true)->orderBy('order')->get();
+                            @endphp
+                            @foreach($navStudyCenters as $sc)
+                            <li><a class="dropdown-item" href="{{ route('study-centers.show', $sc->slug) }}">
+                                <i class="bi bi-chevron-right me-2 text-muted" style="font-size:11px;"></i>
+                                {{ $sc->short_name ? $sc->short_name . ' - ' : '' }}{{ Str::limit($sc->name, 35) }}
+                            </a></li>
+                            @endforeach
                         </ul>
                     </li>
 
