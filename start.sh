@@ -3,6 +3,9 @@ set -e
 
 echo "=== LPPM UNIK Cipasung — Deploy Start ==="
 
+# Discover packages (skipped during build due to --no-scripts)
+php artisan package:discover --ansi
+
 # Storage link (safe to run multiple times)
 php artisan storage:link --force 2>/dev/null || true
 
