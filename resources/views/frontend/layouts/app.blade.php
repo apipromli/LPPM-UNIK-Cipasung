@@ -594,10 +594,6 @@
         <div class="container d-flex align-items-center">
             <a class="navbar-brand me-auto" href="{{ route('home') }}">
                 <img src="/assets/images/image.png" alt="Logo LPPM" onerror="this.style.display='none'">
-                <div class="navbar-brand-text">
-                    <span class="brand-main">LPPM UNIK Cipasung</span>
-                    <span class="brand-sub">Universitas Islam KH. Ruhiyat</span>
-                </div>
             </a>
 
             <button class="navbar-toggler border-0 ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
