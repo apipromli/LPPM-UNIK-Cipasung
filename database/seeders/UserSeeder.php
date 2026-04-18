@@ -10,18 +10,22 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::create([
-            'name' => 'Admin LPPM',
-            'email' => 'admin@lppm.unik.ac.id',
-            'password' => Hash::make('password123'),
-            'role' => 'admin',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@lppm.unik.ac.id'],
+            [
+                'name'     => 'Admin LPPM',
+                'password' => Hash::make('admin@lppm2025'),
+                'role'     => 'admin',
+            ]
+        );
 
-        User::create([
-            'name' => 'User Demo',
-            'email' => 'user@lppm.unik.ac.id',
-            'password' => Hash::make('password123'),
-            'role' => 'user',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'demo@lppm.unik.ac.id'],
+            [
+                'name'     => 'User Demo',
+                'password' => Hash::make('demo123'),
+                'role'     => 'user',
+            ]
+        );
     }
 }
