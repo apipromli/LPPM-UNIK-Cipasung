@@ -3,6 +3,12 @@ set -e
 
 echo "=== LPPM UNIK Cipasung — Deploy Start ==="
 
+# Ensure APP_URL is always valid (RAILWAY_PUBLIC_DOMAIN may not be set yet)
+if [ -z "$RAILWAY_PUBLIC_DOMAIN" ] || [ "$APP_URL" = "https://" ]; then
+    export APP_URL="http://localhost:${PORT:-8000}"
+    echo "APP_URL fallback: $APP_URL"
+fi
+
 # Discover packages (skipped during build due to --no-scripts)
 php artisan package:discover --ansi
 
@@ -26,5 +32,5 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-echo "=== Starting PHP server on port $PORT ==="
+echo "=== Starting PHP server on port ${PORT:-8000} ==="
 php -S 0.0.0.0:${PORT:-8000} -t public
