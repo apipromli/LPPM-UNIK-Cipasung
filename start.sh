@@ -12,6 +12,18 @@ fi
 # Discover packages (skipped during build due to --no-scripts)
 php artisan package:discover --ansi
 
+# Ensure storage directories exist (Railway ephemeral filesystem)
+mkdir -p storage/app/public/study-centers/heads
+mkdir -p storage/app/public/researches
+mkdir -p storage/app/public/ppm
+mkdir -p storage/app/public/galleries
+mkdir -p storage/app/public/leaders
+mkdir -p storage/app/public/staff
+mkdir -p storage/framework/cache/data
+mkdir -p storage/framework/sessions
+mkdir -p storage/framework/views
+mkdir -p bootstrap/cache
+
 # Storage link (safe to run multiple times)
 php artisan storage:link --force 2>/dev/null || true
 
