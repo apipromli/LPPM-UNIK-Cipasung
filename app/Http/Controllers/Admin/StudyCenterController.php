@@ -36,11 +36,14 @@ class StudyCenterController extends Controller
             'vision'      => 'nullable|string',
             'mission'     => 'nullable|string',
             'programs'    => 'nullable|string',
-            'is_active'   => 'boolean',
+            'is_active'   => 'nullable|boolean',
             'order'       => 'nullable|integer',
         ]);
 
-        $validated['slug'] = Str::slug($validated['name']);
+        $slug = Str::slug($validated['name']);
+        $validated['slug'] = StudyCenter::where('slug', $slug)->exists()
+            ? $slug . '-' . time()
+            : $slug;
         $validated['is_active'] = $request->boolean('is_active', true);
 
         if ($request->hasFile('image')) {
@@ -81,7 +84,7 @@ class StudyCenterController extends Controller
             'vision'      => 'nullable|string',
             'mission'     => 'nullable|string',
             'programs'    => 'nullable|string',
-            'is_active'   => 'boolean',
+            'is_active'   => 'nullable|boolean',
             'order'       => 'nullable|integer',
         ]);
 
