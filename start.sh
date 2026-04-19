@@ -31,19 +31,10 @@ php artisan storage:link --force 2>/dev/null || true
 echo "Running migrations..."
 php artisan migrate --force
 
-# Seed users if table is empty
-USER_COUNT=$(php artisan tinker --execute="echo App\Models\User::count();" 2>/dev/null | tail -1)
-if [ "$USER_COUNT" = "0" ] || [ -z "$USER_COUNT" ]; then
-    echo "Seeding users..."
-    php artisan db:seed --class=UserSeeder --force
-fi
-
-# Seed demo data if profile table is empty
-PROFILE_COUNT=$(php artisan tinker --execute="echo App\Models\Profile::count();" 2>/dev/null | tail -1)
-if [ "$PROFILE_COUNT" = "0" ] || [ -z "$PROFILE_COUNT" ]; then
-    echo "Seeding demo data..."
-    php artisan db:seed --class=DemoSeeder --force
-fi
+# Seed initial & demo data (idempotent — safe to run on every deploy)
+echo "Running seeders..."
+php artisan db:seed --class=UserSeeder --force
+php artisan db:seed --class=DemoSeeder --force
 
 # Clear and cache config for production
 php artisan config:clear
