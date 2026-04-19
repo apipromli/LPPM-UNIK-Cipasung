@@ -141,7 +141,7 @@
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="stat-item border-end-0" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="stat-icon"><i class="bi bi-handshake-fill"></i></div>
+                        <div class="stat-icon"><i class="bi bi-diagram-3-fill"></i></div>
                         <div class="stat-number counter" data-target="{{ $totalCooperations }}">0</div>
                         <div class="stat-label">Kerjasama Aktif</div>
                     </div>
