@@ -765,5 +765,16 @@
         });
     </script>
     @stack('scripts')
+    <script>
+        // Fallback for ephemeral storage images on Railway
+        document.querySelectorAll('img[src*="/storage/"]').forEach(function(img) {
+            img.addEventListener('error', function() {
+                if (!this.dataset.errored) {
+                    this.dataset.errored = '1';
+                    this.src = '/assets/images/profil.png';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

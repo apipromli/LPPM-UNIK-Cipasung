@@ -118,7 +118,25 @@
                     &nbsp;·&nbsp; Halaman {{ $ppms->currentPage() }} / {{ $ppms->lastPage() }}
                 </small>
                 <div class="pagination-wrap">
-                    {{ $ppms->links() }}
+                    @if($ppms->hasPages())
+                    <ul class="pagination mb-0">
+                        @if($ppms->onFirstPage())
+                            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                        @else
+                            <li class="page-item"><a class="page-link" href="{{ $ppms->previousPageUrl() }}">&laquo;</a></li>
+                        @endif
+                        @for($i = 1; $i <= $ppms->lastPage(); $i++)
+                            <li class="page-item {{ $ppms->currentPage() == $i ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $ppms->url($i) }}">{{ $i }}</a>
+                            </li>
+                        @endfor
+                        @if($ppms->hasMorePages())
+                            <li class="page-item"><a class="page-link" href="{{ $ppms->nextPageUrl() }}">&raquo;</a></li>
+                        @else
+                            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                        @endif
+                    </ul>
+                    @endif
                 </div>
             </div>
         </div>

@@ -116,7 +116,25 @@
                     &nbsp;·&nbsp; Halaman {{ $researches->currentPage() }} / {{ $researches->lastPage() }}
                 </small>
                 <div class="pagination-wrap">
-                    {{ $researches->links() }}
+                    @if($researches->hasPages())
+                    <ul class="pagination mb-0">
+                        @if($researches->onFirstPage())
+                            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                        @else
+                            <li class="page-item"><a class="page-link" href="{{ $researches->previousPageUrl() }}">&laquo;</a></li>
+                        @endif
+                        @for($i = 1; $i <= $researches->lastPage(); $i++)
+                            <li class="page-item {{ $researches->currentPage() == $i ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $researches->url($i) }}">{{ $i }}</a>
+                            </li>
+                        @endfor
+                        @if($researches->hasMorePages())
+                            <li class="page-item"><a class="page-link" href="{{ $researches->nextPageUrl() }}">&raquo;</a></li>
+                        @else
+                            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                        @endif
+                    </ul>
+                    @endif
                 </div>
             </div>
         </div>
