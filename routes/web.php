@@ -33,6 +33,8 @@ Route::prefix('tentang-kami')->name('about.')->group(function () {
     Route::get('/staf', [AboutController::class, 'staff'])->name('staff');
     Route::get('/galeri', [AboutController::class, 'gallery'])->name('gallery');
     Route::get('/realisasi-anggaran', [AboutController::class, 'budgetRealization'])->name('budget-realization');
+    Route::get('/realisasi-anggaran/pin', [AboutController::class, 'showBudgetPin'])->name('budget-pin');
+    Route::post('/realisasi-anggaran/pin', [AboutController::class, 'verifyBudgetPin'])->name('budget-pin.verify');
 });
 
 // Service Routes

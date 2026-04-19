@@ -625,7 +625,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('services.research') }}"><i class="bi bi-journal-text"></i> Layanan Penelitian</a></li>
                             <li><a class="dropdown-item" href="{{ route('services.community-service') }}"><i class="bi bi-people-fill"></i> Pengabdian Masyarakat</a></li>
-                            <li><a class="dropdown-item" href="{{ route('services.cooperation') }}"><i class="bi bi-handshake"></i> Kerjasama</a></li>
+                            <li><a class="dropdown-item" href="{{ route('services.cooperation') }}"><i class="bi bi-building-check"></i> Kerjasama</a></li>
                         </ul>
                     </li>
 

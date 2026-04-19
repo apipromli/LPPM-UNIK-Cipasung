@@ -10,6 +10,7 @@ use App\Models\Leader;
 use App\Models\Staff;
 use App\Models\Gallery;
 use App\Models\BudgetRealization;
+use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
@@ -51,7 +52,28 @@ class AboutController extends Controller
 
     public function budgetRealization()
     {
+        if (!session('budget_pin_verified')) {
+            return redirect()->route('about.budget-pin');
+        }
         $budgets = BudgetRealization::latest()->paginate(10);
         return view('frontend.about.budget-realization', compact('budgets'));
+    }
+
+    public function showBudgetPin()
+    {
+        if (session('budget_pin_verified')) {
+            return redirect()->route('about.budget-realization');
+        }
+        return view('frontend.about.budget-pin');
+    }
+
+    public function verifyBudgetPin(Request $request)
+    {
+        $pin = env('BUDGET_ACCESS_PIN', '2026');
+        if ($request->pin === $pin) {
+            session(['budget_pin_verified' => true]);
+            return redirect()->route('about.budget-realization');
+        }
+        return back()->withErrors(['pin' => 'PIN tidak valid. Silakan coba lagi.']);
     }
 }

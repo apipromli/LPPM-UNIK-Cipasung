@@ -27,14 +27,17 @@
         @if($profile)
         <div class="row">
             @if($profile->image)
-            <div class="col-md-5 mb-4">
-                <img src="{{ asset('storage/' . $profile->image) }}"
-                    alt="{{ $profile->title }}"
-                    class="img-fluid rounded shadow">
+            <div class="col-md-4 mb-4">
+                <div class="profile-image-wrap">
+                    <img src="{{ asset('storage/' . $profile->image) }}"
+                        alt="{{ $profile->title }}"
+                        class="profile-img"
+                        onerror="this.parentElement.innerHTML='<div class=\'profile-placeholder\'><i class=\'bi bi-building\'></i><span>LPPM UNIK Cipasung</span></div>'">
+                </div>
             </div>
             @endif
 
-            <div class="col-md-{{ $profile->image ? '7' : '12' }}">
+            <div class="col-md-{{ $profile->image ? '8' : '12' }}">
                 <h2 class="mb-4">{{ $profile->title }}</h2>
                 <div class="content-text">
                     {!! $profile->content !!}
@@ -66,8 +69,36 @@
     .content-text h4 {
         margin-top: 30px;
         margin-bottom: 15px;
-        color: var(--primary-color);
+        color: var(--primary);
     }
+
+    .profile-image-wrap {
+        position: sticky;
+        top: 90px;
+    }
+    .profile-img {
+        width: 100%;
+        height: 320px;
+        object-fit: cover;
+        object-position: top;
+        border-radius: 14px;
+        box-shadow: 0 8px 30px rgba(14,66,38,.15);
+    }
+    .profile-placeholder {
+        width: 100%;
+        height: 320px;
+        background: linear-gradient(135deg, #0e4226, #1a6638);
+        border-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1rem;
+        gap: 12px;
+        box-shadow: 0 8px 30px rgba(14,66,38,.15);
+    }
+    .profile-placeholder i { font-size: 3rem; opacity: .8; }
 
     .page-header-image {
         position: relative;
