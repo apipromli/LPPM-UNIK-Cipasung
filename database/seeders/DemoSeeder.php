@@ -60,7 +60,7 @@ class DemoSeeder extends Seeder
             OrganizationalStructure::create([
                 'title'       => 'Struktur Organisasi LPPM UNIK Cipasung 2024–2028',
                 'description' => 'Struktur organisasi LPPM UNIK Cipasung terdiri dari Ketua LPPM yang bertanggung jawab langsung kepada Rektor, dibantu oleh Sekretaris LPPM. Di bawahnya terdapat Kepala Pusat Penelitian, Kepala Pusat Pengabdian kepada Masyarakat, dan Kepala Pusat Kerjasama & Publikasi. Masing-masing kepala pusat dibantu oleh staf administrasi dan reviewer internal.',
-                'image'       => null,
+                'image'       => 'placeholder.jpg',
             ]);
         }
 
